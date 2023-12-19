@@ -1,7 +1,6 @@
 package com.goorm.devlink.notificationservice.entity;
 
 
-import com.goorm.devlink.notificationservice.dto.NotifyDto;
 import com.goorm.devlink.notificationservice.dto.NotifyType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class Notification extends BaseTimeEntity{
+public class MentoringNotification extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
@@ -22,6 +21,12 @@ public class Notification extends BaseTimeEntity{
 
     @Column(unique = true)
     private String notificationUuid;
+
+    @Column(name = "apply_uuid")
+    private String applyUuid;
+
+    @Column(name = "post_uuid")
+    private String postUuid;
 
     @Column(name = "sender_uuid")
     private String senderUuid;

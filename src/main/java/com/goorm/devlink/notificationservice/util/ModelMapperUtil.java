@@ -1,7 +1,7 @@
 package com.goorm.devlink.notificationservice.util;
 
 import com.goorm.devlink.notificationservice.dto.NotifyDto;
-import com.goorm.devlink.notificationservice.entity.Notification;
+import com.goorm.devlink.notificationservice.entity.MentoringNotification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -11,8 +11,8 @@ public class ModelMapperUtil {
 
     private final ModelMapper modelMapper;
 
-    public Notification convertToNotification(NotifyDto notifyDto) {
+    public MentoringNotification convertToNotification(NotifyDto notifyDto) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return modelMapper.map(notifyDto, Notification.class);
+        return modelMapper.map(notifyDto, MentoringNotification.class);
     }
 }

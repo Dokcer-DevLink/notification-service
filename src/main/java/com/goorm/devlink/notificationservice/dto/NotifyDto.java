@@ -12,6 +12,8 @@ import java.io.Serializable;
 public class NotifyDto implements Serializable {
 
     private String notificationUuid;
+    private String applyUuid;
+    private String postUuid;
     private String senderUuid;
     private String recipientUuid;
     private NotifyType notifyType;
