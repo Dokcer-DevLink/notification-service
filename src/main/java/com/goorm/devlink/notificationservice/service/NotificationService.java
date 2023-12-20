@@ -10,4 +10,8 @@ public interface NotificationService {
     void saveNotification(NotifyDto notifyDto);
 
     Slice<NotifyMessageResponse> findMyNotificationList(String userUuid);
+
+    void doCheckApplyNotify(NotifyDto notifyDto);
+
+    void checkNotification(String notificationUuid);
 }

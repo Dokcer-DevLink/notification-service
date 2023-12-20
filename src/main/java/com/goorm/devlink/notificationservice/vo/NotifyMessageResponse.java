@@ -12,6 +12,7 @@ import lombok.Setter;
 @Builder
 public class NotifyMessageResponse {
 
+    private String notificationUuid;
     private String message;
     private NotifyType notifyType;
     private String applyUuid;
@@ -21,6 +22,7 @@ public class NotifyMessageResponse {
 
     public static NotifyMessageResponse getInstance(MentoringNotification notification){
         return NotifyMessageResponse.builder()
+                .notificationUuid(notification.getNotificationUuid())
                 .message(notification.getNotifyType().getMessage())
                 .notifyType(notification.getNotifyType())
                 .applyUuid(notification.getApplyUuid())

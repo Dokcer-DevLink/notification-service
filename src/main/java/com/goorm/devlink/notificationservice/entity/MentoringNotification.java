@@ -1,6 +1,7 @@
 package com.goorm.devlink.notificationservice.entity;
 
 
+import com.goorm.devlink.notificationservice.dto.NotifyStatus;
 import com.goorm.devlink.notificationservice.dto.NotifyType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -38,4 +39,12 @@ public class MentoringNotification extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private NotifyType notifyType;
 
+    @Column(name = "notify_status")
+    @Enumerated(EnumType.STRING)
+    private NotifyStatus notifyStatus;
+
+
+    public void updateStatus(NotifyStatus notifyStatus) {
+        this.notifyStatus = notifyStatus;
+    }
 }
