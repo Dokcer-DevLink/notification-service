@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 public interface NotificationRepository extends JpaRepository<MentoringNotification,Long> {
     Slice<MentoringNotification> findByRecipientUuidAndNotifyStatus(String userUuid, NotifyStatus notifyStatus, Pageable pageable);
     MentoringNotification findByApplyUuidAndNotifyType(String applyUuid, NotifyType notifyType);

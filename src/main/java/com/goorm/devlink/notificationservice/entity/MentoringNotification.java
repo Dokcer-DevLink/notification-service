@@ -14,13 +14,20 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
+@SequenceGenerator(
+        name="NOTIFICATION_SEQ_GENERATOR",
+        sequenceName = "MENTORING_NOTIFICATION_SEQ",
+        initialValue = 1,allocationSize = 1
+
+)
 public class MentoringNotification extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTIFICATION_SEQ_GENERATOR")
+    @Column(name = "notification_id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "notification_uuid")
     private String notificationUuid;
 
     @Column(name = "apply_uuid")
