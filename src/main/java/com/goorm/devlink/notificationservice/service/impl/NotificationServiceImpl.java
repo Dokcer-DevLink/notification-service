@@ -13,9 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,13 +23,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final ModelMapperUtil modelMapperUtil;
     private final NotificationRepository notificationRepository;
-
-    @Override
-    public void saveNotification(NotifyDto notifyDto) {
-        MentoringNotification mentoringNotification = modelMapperUtil.convertToNotification(notifyDto);
-        mentoringNotification.updateStatus(NotifyStatus.UNCHKECK);
-        notificationRepository.save(mentoringNotification);
-    }
 
     @Override
     public Slice<NotifyMessageResponse> findMyNotificationList(String userUuid) {
@@ -42,22 +34,37 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void doCheckApplyNotify(NotifyDto notifyDto) {
-        MentoringNotification notification =
-                Optional.of(notificationRepository.
-                                findByApplyUuidAndNotifyType(notifyDto.getApplyUuid(), NotifyType.MENTORING_APPLY))
-                        .orElseThrow(()-> { throw new NoSuchElementException("");});
+    @Transactional
+    public void saveNotification(NotifyDto notifyDto) {
+        MentoringNotification mentoringNotification = modelMapperUtil.convertToNotification(notifyDto);
+        mentoringNotification.updateStatus(NotifyStatus.UNCHKECK);
+        notificationRepository.save(mentoringNotification);
+    }
 
+    @Override
+    @Transactional
+    public void doCheckApplyNotify(NotifyDto notifyDto) {
+        MentoringNotification notification = findMentoringNotification(notifyDto);
         notification.updateStatus(NotifyStatus.CHECK);
         notificationRepository.save(notification);
     }
 
     @Override
+    @Transactional
     public void checkNotification(String notificationUuid) {
-        MentoringNotification notification =
-                Optional.of(notificationRepository.findByNotificationUuid(notificationUuid))
-                        .orElseThrow(()-> { throw new NoSuchElementException("");});
+        MentoringNotification notification = findMentoringNotification(notificationUuid);
         notification.updateStatus(NotifyStatus.CHECK);
         notificationRepository.save(notification);
+    }
+
+    private MentoringNotification findMentoringNotification(NotifyDto notifyDto){
+        return notificationRepository
+                .findByApplyUuidAndNotifyType(notifyDto.getApplyUuid(), NotifyType.MENTORING_APPLY)
+                .orElseThrow(()-> { throw new NoSuchElementException(""); });
+    }
+
+    private MentoringNotification findMentoringNotification(String notificationUuid){
+        return  notificationRepository.findByNotificationUuid(notificationUuid)
+                        .orElseThrow(()-> { throw new NoSuchElementException("");});
     }
 }
