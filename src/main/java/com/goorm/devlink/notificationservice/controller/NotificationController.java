@@ -43,14 +43,14 @@ public class NotificationController {
     @GetMapping("/api/notification/my")
     public ResponseEntity<Slice<NotifyMessageResponse>> getMyNotificationList(@RequestHeader("userUuid") String userUuid){
         Slice<NotifyMessageResponse> notifyMessageResponses = notificationService.findMyNotificationList(userUuid);
-        return new ResponseEntity<>(notifyMessageResponses, HttpStatus.OK);
+        return ResponseEntity.ok(notifyMessageResponses);
     }
 
     @GetMapping("/api/notification/check")
     public ResponseEntity<NotifySimpleResponse> checkNotification(@RequestParam String notificationUuid){
         //notificationUuid empty인 경우
         notificationService.checkNotification(notificationUuid);
-        return new ResponseEntity<>(NotifySimpleResponse.getInstance(notificationUuid,"알림을 체크하셨습니다."),HttpStatus.OK);
+        return ResponseEntity.ok(NotifySimpleResponse.getInstance(notificationUuid,"알림을 체크하셨습니다."));
     }
 
 }
