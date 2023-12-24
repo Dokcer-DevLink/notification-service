@@ -6,6 +6,7 @@ import com.goorm.devlink.notificationservice.dto.NotifyType;
 import com.goorm.devlink.notificationservice.entity.MentoringNotification;
 import com.goorm.devlink.notificationservice.repository.NotificationRepository;
 import com.goorm.devlink.notificationservice.service.NotificationService;
+import com.goorm.devlink.notificationservice.util.MessageUtil;
 import com.goorm.devlink.notificationservice.util.ModelMapperUtil;
 import com.goorm.devlink.notificationservice.vo.NotifyMessageResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final ModelMapperUtil modelMapperUtil;
     private final NotificationRepository notificationRepository;
+    private final MessageUtil messageUtil;
 
     @Override
     public Slice<NotifyMessageResponse> findMyNotificationList(String userUuid) {
@@ -60,11 +62,14 @@ public class NotificationServiceImpl implements NotificationService {
     private MentoringNotification findMentoringNotification(NotifyDto notifyDto){
         return notificationRepository
                 .findByApplyUuidAndNotifyType(notifyDto.getApplyUuid(), NotifyType.MENTORING_APPLY)
-                .orElseThrow(()-> { throw new NoSuchElementException(""); });
+                .orElseThrow(()-> {
+                    throw new NoSuchElementException(messageUtil.getApplyNoSuchMessage(notifyDto.getApplyUuid())); });
     }
 
     private MentoringNotification findMentoringNotification(String notificationUuid){
         return  notificationRepository.findByNotificationUuid(notificationUuid)
-                        .orElseThrow(()-> { throw new NoSuchElementException("");});
+                        .orElseThrow(()-> {
+                            throw new NoSuchElementException(messageUtil.getNotificationNoSuchMessage(notificationUuid));
+                        });
     }
 }
