@@ -24,9 +24,9 @@ spring:
 
 data:
   kafka:
-    topicName: kafka-mentoring
-    bootstrapServerUrl: localhost:9092
-    groupId: notification-service
+    topicName: ${KAFKA_TOPIC_NAME}
+    bootstrapServerUrl: ${KAFKA_SERVICE}:9092
+    groupId: ${KAFKA_GROUP_ID}
 
 eureka:
   client:
