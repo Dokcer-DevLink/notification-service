@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: notification-service
+  messages:
+    basename: messages, errors
   config:
     activate:
       on-profile: kubernetes
