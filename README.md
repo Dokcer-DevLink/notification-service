@@ -1,5 +1,5 @@
 <div align="center">
-<h1>Mentoring-Service</h1>
+<h1>Notification-Service</h1>
 <h3> 멘토링 신청, 수락, 거절 알림를 담당하는 서비스 
 
 알림 서비스</h3>
@@ -22,3 +22,7 @@
 
 ### - 나의 알림 조회
 DB에 저장되어 있는 멘토링 신청, 수락, 거절 알림을 조회한다.
+
+
+<br>
+<br>
